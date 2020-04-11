@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Hello, world!</title>
+    <title>BlogBook</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -11,7 +11,7 @@
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
-
+    <link rel="icon" href="{{ url('media/favicon.png') }}" />
     <!-- Material Kit CSS -->
     
     <link href="{{ asset('css/libs.css') }}" rel="stylesheet" />
@@ -25,12 +25,12 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-          <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-              CT
+          <!-- <a href="javascript:void(0);" class="simple-text logo-mini">
+              BB
           </a>
-
-          <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-            Creative Tim
+ -->
+          <a href="javascript:void(0);" class="simple-text logo-normal">
+            Blog Book
           </a>
       </div>
 
@@ -46,7 +46,7 @@
           </li>
 
           <li>
-              <a href="/Categories">
+              <a href="/categories">
 
                     <i class="now-ui-icons design_bullet-list-67"></i>
 

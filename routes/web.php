@@ -33,6 +33,8 @@ Route::get('/logout', function() {
 
 Route::resource('posts','PostController');
 
+Route::resource('categories','CategoryController');
+
 // Route::get("/post/delete/{id}", function($id) {
 // 	$post = Post::findOrFail($id);
 // 	$post->delete();

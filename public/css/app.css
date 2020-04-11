@@ -10964,3 +10964,17 @@ a.text-dark:focus {
     background: greenyellow;
     color: blue;
  }
+
+ form {
+  display: inline-block;
+ }
+
+ /* css for modal */
+
+ .modal-body button{
+    background: #25274d;
+    color: #fff;
+    font-weight: 600;
+    width: 55%;
+  }
+

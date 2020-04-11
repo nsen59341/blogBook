@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Session;
+
+use App\Category;
+
 class CategoryController extends Controller
 {
     /**
@@ -13,7 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::paginate('15') ;
+        return view('category.list', compact('categories'));
     }
 
     /**
@@ -56,7 +61,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -66,9 +71,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Category $category)
     {
-        //
+        $category->update($this->validateTask());
+
+        $category->save();
+
+        Session::flash('post_msg','The Category name has been succesfully changed');
+
+        return redirect('/categories');
     }
 
     /**
@@ -79,6 +90,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return redirect('/categories') ;
     }
+
+    public function validateTask()
+    {
+        return request()->validate([
+            'name' => 'required'
+        ]);
+    }
+
 }
