@@ -1,4 +1,4 @@
-<div id="editModal" class="modal fade" role="dialog">
+<div id="addModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -7,8 +7,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <!-- <div class="contact-form"> -->
-        {!! Form::open(['method'=>'put', 'class'=>'edit-modal', 'route'=>['categories.update',1]]) !!}
+        {!! Form::open(['method'=>'post', 'class'=>'add-modal', 'route'=>'categories.store']) !!}
         <div class="form-group">
           <label class="control-label col-sm-3" for="title">Name:</label>
           <div class="col-sm-10">          
@@ -20,11 +19,10 @@
         </div>
         <div class="form-group">        
           <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default"> update </button>
+            <button type="submit" class="btn btn-default"> add </button>
           </div>
         </div>
         {!! Form::close() !!}
-      <!-- </div> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

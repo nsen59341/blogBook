@@ -10965,6 +10965,11 @@ a.text-dark:focus {
     color: blue;
  }
 
+ .msg-error {
+    background: white;
+    color: red;
+ }
+
  form {
   display: inline-block;
  }

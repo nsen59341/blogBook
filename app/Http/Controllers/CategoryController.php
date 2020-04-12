@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 
 use App\Category;
 
+use App\Post;
+
 class CategoryController extends Controller
 {
     /**
@@ -39,7 +41,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = Category::create($this->validateTask());
+        $category->save();
+        Session::flash('post_msg','The Category has been succesfully created');
+        // return redirect('/categories');
     }
 
     /**
@@ -79,7 +84,7 @@ class CategoryController extends Controller
 
         Session::flash('post_msg','The Category name has been succesfully changed');
 
-        return redirect('/categories');
+        // return redirect('/categories');
     }
 
     /**
@@ -95,10 +100,17 @@ class CategoryController extends Controller
         return redirect('/categories') ;
     }
 
+    public function showPosts($id)
+    {
+        $posts = Post::where('category_id',$id)->paginate(10);
+        // return $posts;
+        return view('post.list', compact('posts'));
+    }
+
     public function validateTask()
     {
         return request()->validate([
-            'name' => 'required'
+            'name' => 'required | unique:categories'
         ]);
     }
 

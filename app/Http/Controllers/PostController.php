@@ -47,6 +47,7 @@ class PostController extends Controller
         $post = Post::create($this->validateTask());
         $post->save();
         Session::flash('post_msg','The Post has been succesfully created');
+        
         return redirect('/posts');
     }
 

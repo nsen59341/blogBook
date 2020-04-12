@@ -35,6 +35,8 @@ Route::resource('posts','PostController');
 
 Route::resource('categories','CategoryController');
 
+Route::get('categories/posts/{id}','CategoryController@showPosts');
+
 // Route::get("/post/delete/{id}", function($id) {
 // 	$post = Post::findOrFail($id);
 // 	$post->delete();
