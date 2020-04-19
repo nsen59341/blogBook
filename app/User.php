@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function media()
     {
-        return $this->hasOne('App\Media');
+        return $this->belongsTo('App\Medias', 'profile_pic_id');
     }
     
 }

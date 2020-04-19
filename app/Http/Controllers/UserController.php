@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Session;
+
+use Illuminate\Support\Facades\Storage;
+
+
+use App\User;
+
+use App\Medias;
+
 class UserController extends Controller
 {
     /**
@@ -56,7 +65,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id) ;
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -66,9 +76,36 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(User $user)
     {
-        //
+        $user->update($this->validateTask());
+        $user->save();
+        Session::flash('post_msg','The Profile has been succesfully updated');
+
+        return redirect()->back();
+    }
+
+    public function profile_picture_update(Request $request,$id)
+    {
+        if($request->file('photo'))
+        {
+            $allowedextension = ['jpg','png','svg'];
+            $file = $request->file('photo');
+            $filename = $file->getClientOriginalName();
+            $filextn = $file->getClientOriginalExtension();
+            if(in_array($filextn, $allowedextension))
+            {
+                if($file->move('media', $filename))
+                {
+                    $photo = Medias::findOrFail($id) ;
+                    $photo->name = $filename ;
+                    $photo->save();
+                }
+                
+                return redirect()->back();
+               
+            }
+        }
     }
 
     /**
@@ -81,4 +118,19 @@ class UserController extends Controller
     {
         //
     }
+
+    public function getUserData()
+    {
+        return view('user.profile');
+    }
+
+   
+    public function validateTask()
+    {
+        return request()->validate([
+            'name' => 'required',
+            'email' => 'required'
+        ]);
+    }
+
 }

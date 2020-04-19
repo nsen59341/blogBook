@@ -10,8 +10,8 @@
 	@if( Session::get('post_msg') )
 	<span class="msg-succs">{{ Session::get('post_msg') }}</span>
 	@endif
-	@if( Session::get('err_msg') )
-	<span class="msg-error">{{ Session::get('err_msg') }}</span>
+	@if( Session::get('del_msg') )
+	<span class="msg-error">{{ Session::get('del_msg') }}</span>
 	@endif
 	<div class="text-right">
 		<button class="btn btn-danger fa fa-plus" title="Add New Category" data-toggle="modal" data-target="#addModal"></button>
@@ -32,7 +32,7 @@
 		      <th scope="row">{{ $category->id }}</th>
 		      <td><a href="{{ url('categories/posts/'.$category->id) }}">{{ $category->name }}</a></td>
 		      <td>
-		      	{!! Form::open(['method'=>'delete', 'route'=>['categories.destroy',$category->id]]) !!}
+		      	{!! Form::open(['method'=>'delete', 'route'=>['categories.destroy',$category->id] , 'class'=>'btn-form']) !!}
 		      	<button type="submit" class="btn btn-danger fa fa-trash" title="Delete Category"></button>
 		      	{!! Form::close() !!}
 		      	

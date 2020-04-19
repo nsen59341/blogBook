@@ -10970,7 +10970,7 @@ a.text-dark:focus {
     color: red;
  }
 
- form {
+ .btn-form {
   display: inline-block;
  }
 

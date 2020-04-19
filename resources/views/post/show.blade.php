@@ -7,10 +7,10 @@
 	<span class="small-txt post-author">posted {{ $post->user->created_at->diffForHumans() }} by {{ $post->user->name }} </span>
 	<p class="post-single-body">{{ $post->blog }} </p>
 	<div class="modification-link">
-		{!! Form::open(['method'=>'get', 'route'=>['posts.edit',$post->id]]) !!}
+		{!! Form::open(['method'=>'get', 'route'=>['posts.edit',$post->id] , 'class'=>'btn-form']) !!}
 		<button class="btn btn-warning edit-link">edit</button>
 		{!! Form::close() !!}
-		{!! Form::open(['method'=>'delete', 'route'=>['posts.destroy',$post->id]]) !!}
+		{!! Form::open(['method'=>'delete', 'route'=>['posts.destroy',$post->id] , 'class'=>'btn-form']) !!}
 		<button type="submit" class="btn btn-danger delete-link">delete</button>
 		{!! Form::close() !!}
 

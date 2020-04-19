@@ -6,6 +6,9 @@
 	@if( Session::get('post_msg') )
 	<span class="msg-succs">{{ Session::get('post_msg') }}</span>
 	@endif
+	@if( Session::get('del_msg') )
+	<span class="msg-error">{{ Session::get('del_msg') }}</span>
+	@endif
 	<div class="text-right">
 		{!! Form::open(['method'=>'get', 'route'=>'posts.create']) !!}
 			<button class="btn btn-danger fa fa-plus" title="Add New Post"></button>

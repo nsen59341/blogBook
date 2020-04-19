@@ -63,7 +63,7 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'endpoint' => env('AWS_URL'),
         ],
-
+        
     ],
 
 ];

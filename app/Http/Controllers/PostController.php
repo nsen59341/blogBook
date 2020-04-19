@@ -108,6 +108,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
+        Session::flash('del_msg','The Post has been succesfully deleted');
         return redirect('/posts');
     }
 

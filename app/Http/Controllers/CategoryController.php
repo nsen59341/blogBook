@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category = Category::create($this->validateTask());
         $category->save();
         Session::flash('post_msg','The Category has been succesfully created');
-        // return redirect('/categories');
+        return redirect('/categories');
     }
 
     /**
@@ -84,7 +84,7 @@ class CategoryController extends Controller
 
         Session::flash('post_msg','The Category name has been succesfully changed');
 
-        // return redirect('/categories');
+        return redirect('/categories');
     }
 
     /**
@@ -97,6 +97,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
+        Session::flash('del_msg','The Category name has been succesfully deleted');
         return redirect('/categories') ;
     }
 

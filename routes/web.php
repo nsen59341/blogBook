@@ -17,7 +17,8 @@ use App\User;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect('/home');
 });
 
 Auth::routes(['verify' => true]);
@@ -26,6 +27,10 @@ Route::get('/logout', function() {
     Auth::logout();
     return redirect('/login');
 });
+
+Route::get('/users/edit/{id}','UserController@edit')->name('users.edit');
+
+Route::put('/users/{user}','UserController@update')->name('users.update');
 
 // Route::get("/home", function() {
 // 	return view('home');
@@ -44,3 +49,9 @@ Route::get('categories/posts/{id}','CategoryController@showPosts');
 // });
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+
+Route::get('/profile','UserController@getUserData');
+
+Route::put('/profile_picture/update/{id}', 'UserController@profile_picture_update')->name('profile_picture.update');
+
+
