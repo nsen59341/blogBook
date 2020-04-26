@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Hash;
 
 use App\User;
 
@@ -20,9 +21,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        //
+        $users = User::paginate('10');
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -32,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -43,7 +46,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->password = Hash::make($request->password) ;
+        // return $request;
+        $user = User::create($this->validateTaskAddtn());
+        $user->save();
+        Session::flash('post_msg','The User has been succesfully added');
+        
+        return redirect('/users');
     }
 
     /**
@@ -78,7 +87,7 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
-        $user->update($this->validateTask());
+        $user->update($this->validateTaskUpdtn());
         $user->save();
         Session::flash('post_msg','The Profile has been succesfully updated');
 
@@ -97,15 +106,21 @@ class UserController extends Controller
             {
                 if($file->move('media', $filename))
                 {
-                    $photo = Medias::findOrFail($id) ;
+                    $photo = Medias::create() ;
                     $photo->name = $filename ;
+                    $photo->type = "image";
                     $photo->save();
+
+                    $user = User::findOrFail($id);
+                    $user->profile_pic_id = $photo->id;
+                    $user->save();
                 }
-                
-                return redirect()->back();
-               
+                Session::flash('post_msg','The Profile photo has been succesfully update');
+             
             }
         }
+
+        return redirect()->back();
     }
 
     /**
@@ -116,7 +131,34 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+    }
+
+    public function delete(Request $request)
+    {
+        if( isset($request->delete_single) )
+        {
+            $id = $request->delete_single;
+            $user = User::findOrFail($id);
+            $user->delete();
+            Session::flash('del_msg','The User has been succesfully removed');
+            return redirect('/users');
+        }
+
+        if( isset($request->delete_multiple) && !empty($request->isChecked) )
+        {
+            $users = User::findOrFail($request->isChecked);
+
+            foreach ($users as $key => $user) {
+                $user->delete();
+            }
+            Session::flash('del_msg','The Selected Users have been succesfully removed');
+            return redirect()->back();
+        }
+        else {
+            Session::flash('del_msg','No User has been selected');
+            return redirect()->back();
+        }
     }
 
     public function getUserData()
@@ -125,7 +167,16 @@ class UserController extends Controller
     }
 
    
-    public function validateTask()
+    public function validateTaskAddtn()
+    {
+        return request()->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+    }
+
+    public function validateTaskUpdtn()
     {
         return request()->validate([
             'name' => 'required',

@@ -28,9 +28,6 @@ Route::get('/logout', function() {
     return redirect('/login');
 });
 
-Route::get('/users/edit/{id}','UserController@edit')->name('users.edit');
-
-Route::put('/users/{user}','UserController@update')->name('users.update');
 
 // Route::get("/home", function() {
 // 	return view('home');
@@ -41,6 +38,8 @@ Route::resource('posts','PostController');
 Route::resource('categories','CategoryController');
 
 Route::get('categories/posts/{id}','CategoryController@showPosts');
+
+Route::delete('category/delete', 'CategoryController@delete')->name('categories.delete');
 
 // Route::get("/post/delete/{id}", function($id) {
 // 	$post = Post::findOrFail($id);
@@ -54,4 +53,20 @@ Route::get('/profile','UserController@getUserData');
 
 Route::put('/profile_picture/update/{id}', 'UserController@profile_picture_update')->name('profile_picture.update');
 
+Route::get('/users', 'UserController@index');
 
+Route::get('/users/create', 'UserController@create')->name('users.create');
+
+Route::post('/users', 'UserController@store')->name('users.store');
+
+Route::get('/users/edit/{id}','UserController@edit')->name('users.edit');
+
+Route::put('/users/{user}','UserController@update')->name('users.update');
+
+// Route::delete('/users/{id}', 'UserController@destroy')->name('users.destroy');
+
+Route::delete('/users/delete', 'UserController@delete')->name('users.delete');
+
+
+
+Route::get('/medias', 'MediaController@index')->name('media.index');

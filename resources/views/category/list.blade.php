@@ -13,37 +13,49 @@
 	@if( Session::get('del_msg') )
 	<span class="msg-error">{{ Session::get('del_msg') }}</span>
 	@endif
+	@if(Auth::user()->role_id==1)
 	<div class="text-right">
 		<button class="btn btn-danger fa fa-plus" title="Add New Category" data-toggle="modal" data-target="#addModal"></button>
+	</div>
+	@endif
+	{!! Form::open(['method'=>'delete', 'route'=>'categories.delete', 'class'=>'btn-form']) !!}
+	<div class="text-left">
+		<button type="submit" name="delete_multiple" value="delete_multiple" class="btn btn-danger">Delete Selected</button>
 	</div>
 	<div class="table-responsive">
 	  <table class="table">
 	  	<caption>List of Categories</caption>
 	    <thead>
 		    <tr>
-		      <th scope="col">#</th>
+		      <th>&nbsp</th>
 		      <th scope="col">Category</th>
+		      @if(Auth::user()->role_id==1)
 		      <th scope="col">Action</th>
+		      @endif
 		    </tr>
 		  </thead>
 		  <tbody>
 		  	@foreach( $categories AS $category )
 		    <tr>
-		      <th scope="row">{{ $category->id }}</th>
-		      <td><a href="{{ url('categories/posts/'.$category->id) }}">{{ $category->name }}</a></td>
 		      <td>
-		      	{!! Form::open(['method'=>'delete', 'route'=>['categories.destroy',$category->id] , 'class'=>'btn-form']) !!}
-		      	<button type="submit" class="btn btn-danger fa fa-trash" title="Delete Category"></button>
-		      	{!! Form::close() !!}
+		      	{!! Form::checkbox('isChecked[]', $category->id) !!}
+		      </td>
+		      <td><a href="{{ url('categories/posts/'.$category->id) }}">{{ $category->name }}</a></td>
+		      @if(Auth::user()->role_id==1)
+		      <td>
+		      	
+		      	<button type="submit" name="delete_single" value="{{ $category->id }}" class="btn btn-danger fa fa-trash" title="Delete Category"></button>
 		      	
 		      	<button type="submit" class="btn btn-info fa fa-pencil edit-cat-btn" data-cat_id="{{ $category->id }}" data-cat_name="{{ $category->name }}" title="Edit Category Name" data-toggle="modal" data-target="#editModal"></button>
 		      	
 		      </td>
+		      @endif
 		    </tr>
 		    @endforeach
 		  </tbody>	  
 		</table>
 	</div>
+	{!! Form::close() !!}
 </div>
 
 <div class="pagntn-link">{{ $categories->links() }}</div>
@@ -68,13 +80,6 @@
 		    $(e.currentTarget).find('input[name="name"]').val(catName);
 
 		});
-
-		// $(".edit-modal").submit(function(e) {
-		// 	e.preventDefault();
-		// });
-		// $(".add-modal").submit(function(e) {
-		// 	e.preventDefault();
-		// });
 
 	</script>
 	

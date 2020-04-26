@@ -82,7 +82,7 @@
           </li>
 
           <li>
-              <a href="/images">
+              <a href="/medias">
 
                     <i class="now-ui-icons design_bullet-list-67"></i>
 

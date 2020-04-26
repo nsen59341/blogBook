@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Medias;
+
 class MediaController extends Controller
 {
     /**
@@ -13,7 +15,10 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
+        $images = Medias::where('type','image')->get()->toArray() ;
+        $videos = Medias::where('type','video')->get()->toArray() ;
+        
+        return view('media.index', compact('images','videos'));
     }
 
     /**

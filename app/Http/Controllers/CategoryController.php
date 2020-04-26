@@ -95,10 +95,33 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        Session::flash('del_msg','The Category name has been succesfully deleted');
-        return redirect('/categories') ;
+        
+    }
+
+    public function delete(Request $request)
+    {
+        // dd($request->all());
+        if( isset($request->delete_single) )
+        {
+            $id = $request->delete_single;
+            $category = Category::findOrFail($id);
+            $category->delete();
+            Session::flash('del_msg','The Category has been succesfully deleted');
+            return redirect('/categories') ;
+        }
+        if( isset($request->delete_multiple) && !empty($request->isChecked) )
+        {
+            $categories = Category::findOrFail($request->isChecked);
+            foreach ($categories as $key => $category) {
+                $category->delete();
+            }
+            Session::flash('del_msg','The selected Categories have been succesfully deleted');
+            return redirect()->back();
+        }
+        else{
+            Session::flash('del_msg','No Category has been selected');
+            return redirect()->back();
+        }
     }
 
     public function showPosts($id)
