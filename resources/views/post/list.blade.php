@@ -23,7 +23,7 @@
 					<h2>{{ $post->title }}</h2>
 					<span class="small-txt post-author">posted {{ $post->created_at->diffForHumans() }} by {{ $post->user->name }} </span>
 					<br><br>
-					<p class="post-body">{{ Str::limit($post->blog,200) }} <a href="{{ route('posts.show',$post->id) }}">read more...</a> </p>
+					<p class="post-body">{!! Str::limit($post->blog,200) !!} <a href="{{ route('posts.show',$post->id) }}">read more...</a> </p>
 				</div>
 			@endif
 		@endforeach
