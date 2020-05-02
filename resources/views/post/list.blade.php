@@ -16,17 +16,24 @@
 		{!! Form::close() !!}
 	</div>
 	@endif
-	@foreach($posts AS $post)
-	<div class="each-post">
-		<h2>{{ $post->title }}</h2>
-		<span class="small-txt post-author">posted {{ $post->user->created_at->diffForHumans() }} by {{ $post->user->name }} </span>
-		<br><br>
-		<p class="post-body">{{ Str::limit($post->blog,200) }} <a href="{{ route('posts.show',$post->id) }}">read more...</a> </p>
-	</div>
-	@endforeach
+	@if(!empty($number))
+		@foreach($posts AS $post)
+			@if(!empty($post->user))
+				<div class="each-post">
+					<h2>{{ $post->title }}</h2>
+					<span class="small-txt post-author">posted {{ $post->created_at->diffForHumans() }} by {{ $post->user->name }} </span>
+					<br><br>
+					<p class="post-body">{{ Str::limit($post->blog,200) }} <a href="{{ route('posts.show',$post->id) }}">read more...</a> </p>
+				</div>
+			@endif
+		@endforeach
+	@else
+		<div class="no-view" align="center">There are no post to view</div>
+	@endif
 </div>
 
+@if(!empty($posts))
 <div class="pagntn-link">{{ $posts->links() }}</div>
-
+@endif
 
 @endsection

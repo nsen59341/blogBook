@@ -25,7 +25,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate('10');
-        return view('user.index', compact('users'));
+        $number = User::count();
+        // return $number;
+        return view('user.index', compact('users','number'));
     }
 
     /**
@@ -87,7 +89,7 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
-        $user->update($this->validateTaskUpdtn());
+        $user->update($this->validateTaskUpdtn($user->id));
         $user->save();
         Session::flash('post_msg','The Profile has been succesfully updated');
 
@@ -171,16 +173,16 @@ class UserController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required | unique:users,email',
             'password' => 'required'
         ]);
     }
 
-    public function validateTaskUpdtn()
+    public function validateTaskUpdtn($id)
     {
         return request()->validate([
             'name' => 'required',
-            'email' => 'required'
+            'email' => 'required | unique:users,email,'.$id
         ]);
     }
 

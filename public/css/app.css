@@ -10891,6 +10891,13 @@ a.text-dark:focus {
   margin: 35px 100px;
 }
 
+.no-view {
+  margin-top: 80px;
+  font-weight: 600 !important;
+  font-size: large;
+  font-family: -webkit-body;
+}
+
 .each-post {
   margin-bottom: 30px;
 }

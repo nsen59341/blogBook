@@ -22,7 +22,9 @@ class PostController extends Controller
     {
         // $posts = Post::all();
         $posts = Post::paginate(10);
-        return view('post.list', compact('posts'));
+        $number = Post::count();
+        // return $posts;
+        return view('post.list', compact('posts','number'));
     }
 
     /**

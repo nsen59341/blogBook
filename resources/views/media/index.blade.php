@@ -18,17 +18,25 @@
 	</div>
 	
 	<div class="medias">
+		@if(!empty($images_number))
 		<div class="medias-sec images-sec">
 			@foreach($images AS $image)
 			<span><img src="media/{{ $image['name'] }}" height="200px" width="250px"></span>
 			@endforeach
 		</div>
+		@else
+			<div class="no-view" align="center">There are no image to view</div>
+		@endif
 
+		@if(!empty($videos_number))
 		<div class="medias-sec videos-sec" style="display:none">
 			@foreach($videos AS $video)
 			<span><img src="media/{{ $video['name'] }}" height="200px" width="250px"></span>
 			@endforeach
 		</div>
+		@else
+			<div class="no-view" align="center">There are no video to view</div>
+		@endif
 	</div>
 </div>
 

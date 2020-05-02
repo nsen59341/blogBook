@@ -35,23 +35,27 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		  	@foreach( $categories AS $category )
-		    <tr>
-		      <td>
-		      	{!! Form::checkbox('isChecked[]', $category->id) !!}
-		      </td>
-		      <td><a href="{{ url('categories/posts/'.$category->id) }}">{{ $category->name }}</a></td>
-		      @if(Auth::user()->role_id==1)
-		      <td>
-		      	
-		      	<button type="submit" name="delete_single" value="{{ $category->id }}" class="btn btn-danger fa fa-trash" title="Delete Category"></button>
-		      	
-		      	<button type="submit" class="btn btn-info fa fa-pencil edit-cat-btn" data-cat_id="{{ $category->id }}" data-cat_name="{{ $category->name }}" title="Edit Category Name" data-toggle="modal" data-target="#editModal"></button>
-		      	
-		      </td>
-		      @endif
-		    </tr>
-		    @endforeach
+		  	@if(!empty($number))
+			  	@foreach( $categories AS $category )
+			    <tr>
+			      <td>
+			      	{!! Form::checkbox('isChecked[]', $category->id) !!}
+			      </td>
+			      <td><a href="{{ url('categories/posts/'.$category->id) }}">{{ $category->name }}</a></td>
+			      @if(Auth::user()->role_id==1)
+			      <td>
+			      	
+			      	<button type="submit" name="delete_single" value="{{ $category->id }}" class="btn btn-danger fa fa-trash" title="Delete Category"></button>
+			      	
+			      	<button type="submit" class="btn btn-info fa fa-pencil edit-cat-btn" data-cat_id="{{ $category->id }}" data-cat_name="{{ $category->name }}" title="Edit Category Name" data-toggle="modal" data-target="#editModal"></button>
+			      	
+			      </td>
+			      @endif
+			    </tr>
+			    @endforeach
+			@else
+				<div class="no-view" align="center">There are no Categoty</div>
+			@endif
 		  </tbody>	  
 		</table>
 	</div>

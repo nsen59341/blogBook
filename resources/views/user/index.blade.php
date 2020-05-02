@@ -37,36 +37,42 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		  	@foreach( $users AS $user )
-		    <tr>
-		      <td>
-		      	{!! Form::checkbox('isChecked[]', $user->id) !!}
-		      </td>
-		      <td><a href="javascript:void(0);" id="user_img" data-toggle="modal" data-target="#editProfilePic"><img src="media/{{ $user->media->name }}" height="40px" width="40px"></a></td>
-		      <td>{{ $user->name }}</td>
-		      <td>{{ $user->email }}</td>
-		      <td>{{ $user->created_at->diffForHumans() }}</td>
-		      @if(Auth::user()->role_id==1)
-		      <td>
-		     	<!-- <input type="hidden" name="user_id" value="{{$user->id}}"> -->
-		      	<button type="submit" name="delete_single" class="btn btn-danger fa fa-trash" title="Delete Category" value="{{ $user->id }}"></button>
-		      
-		      	{!! Form::open(['method'=>'get', 'route'=>['users.edit',$user->id], 'class'=>'btn-form edit-form']) !!}
-		      	<button type="button" class="btn btn-info fa fa-pencil edit-user-btn" title="Edit User Name" value="{{ $user->id }}"></button>
-		      	{!! Form::close() !!}
+		  	@if(!empty($number))
+			  	@foreach( $users AS $user )
+				  	@if(!empty($user->media))
+					    <tr>
+					      <td>
+					      	{!! Form::checkbox('isChecked[]', $user->id) !!}
+					      </td>
+					      <td><a href="javascript:void(0);" id="user_img" data-toggle="modal" data-target="#editProfilePic"><img src="media/{{ $user->media->name }}" height="40px" width="40px"></a></td>
+					      <td>{{ $user->name }}</td>
+					      <td>{{ $user->email }}</td>
+					      <td>{{ $user->created_at->diffForHumans() }}</td>
+					      @if(Auth::user()->role_id==1)
+					      <td>
+					     	<!-- <input type="hidden" name="user_id" value="{{$user->id}}"> -->
+					      	<button type="submit" name="delete_single" class="btn btn-danger fa fa-trash" title="Delete Category" value="{{ $user->id }}"></button>
+					      
+					      	{!! Form::open(['method'=>'get', 'route'=>['users.edit',$user->id], 'class'=>'btn-form edit-form']) !!}
+					      	<button type="button" class="btn btn-info fa fa-pencil edit-user-btn" title="Edit User Name" value="{{ $user->id }}"></button>
+					      	{!! Form::close() !!}
 
-		      </td>
-		      @endif
-		    </tr>
-		    @endforeach
+					      </td>
+					      @endif
+					    </tr>
+					@endif
+			    @endforeach
+		    @else
+				<div class="no-view" align="center">There are no user to view</div>
+			@endif
 		  </tbody>	  
 		</table>
 	</div>
 	{!! Form::close() !!}
 </div>
-
+@if(!empty($users->data))
 <div class="pagntn-link">{{ $users->links() }}</div>
-
+@endif
 
 @endsection
 

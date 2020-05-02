@@ -20,7 +20,8 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate('15') ;
-        return view('category.list', compact('categories'));
+        $number = Category::count();
+        return view('category.list', compact('categories','number'));
     }
 
     /**

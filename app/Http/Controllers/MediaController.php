@@ -17,8 +17,11 @@ class MediaController extends Controller
     {
         $images = Medias::where('type','image')->get()->toArray() ;
         $videos = Medias::where('type','video')->get()->toArray() ;
-        
-        return view('media.index', compact('images','videos'));
+
+        $images_number = Medias::where('type','image')->count();
+        $videos_number = Medias::where('type','video')->count();
+
+        return view('media.index', compact('images','videos','images_number','videos_number'));
     }
 
     /**
