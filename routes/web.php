@@ -70,3 +70,9 @@ Route::delete('/users/delete', 'UserController@delete')->name('users.delete');
 
 
 Route::get('/medias', 'MediaController@index')->name('media.index');
+
+Route::get('/medias/create', 'MediaController@create')->name('media.create');
+
+Route::post('/medias/store', 'MediaController@store')->name('media.store');
+
+Route::delete('/medias/delete', 'MediaController@destroy')->name('media.delete');

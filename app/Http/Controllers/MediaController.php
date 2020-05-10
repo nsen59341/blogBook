@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Session;
+
+use Illuminate\Support\Facades\File;
+
 use App\Medias;
 
 class MediaController extends Controller
@@ -31,7 +35,7 @@ class MediaController extends Controller
      */
     public function create()
     {
-        //
+        return view('media.upload');
     }
 
     /**
@@ -42,7 +46,28 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'fileUpload' => 'required|mimetypes:video/mp3,video/mp4,video/avi,video/mpeg,video/quicktime,image/png,image/jpg,image/jpeg,image/svg|max:60000000' 
+        ]);
+
+        if($file=$request->file('fileUpload'))
+        {
+            $destination = 'media';
+            $filename = $file->getClientOriginalName();
+            $mime_type = $file->getMimeType();
+            $mime_type_arr = explode('/', $mime_type);
+            $video_type = $mime_type_arr[0];
+            if($file->move($destination, $filename))
+            {
+                $photo = Medias::create();
+                $photo->name = $filename ;
+                $photo->type = $video_type;
+                $photo->save();
+                Session::flash('post_msg','The ' . $video_type . ' has been succesfully uploaded');
+            }
+            
+        }
+        return redirect('/medias');
     }
 
     /**
@@ -85,8 +110,40 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        if( !empty($request->images) )
+        {
+            $images = Medias::findOrFail($request->images);
+            foreach ($images as $key => $image) {
+                $img_name = $image->name;
+                File::delete('media/'.$img_name);
+                $image->delete();
+            }
+            Session::flash('del_msg','The Selected Images have been succesfully deleted');
+            return redirect()->back();
+        }
+        else {
+            Session::flash('del_msg','No Image has been selected');
+            return redirect()->back();
+        }
+
+        if( !empty($request->videos) )
+        {
+            $videos = Medias::findOrFail($request->videos);
+            foreach ($videos as $key => $video) {
+                $vdo_name = $video->name;
+                File::delete('media/'.$vdo_name);
+                $video->delete();
+            }
+            Session::flash('del_msg','The Selected Videos have been succesfully deleted');
+            return redirect()->back();
+        }
+        else {
+            Session::flash('del_msg','No Video has been selected');
+            return redirect()->back();
+        }
     }
+
+    
 }

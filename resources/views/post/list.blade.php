@@ -1,6 +1,5 @@
-@extends('layouts.admin')
+@master
 
-@section('content')
 
 <div class="main-content list-post">
 	@if( Session::get('post_msg') )
@@ -16,6 +15,9 @@
 		{!! Form::close() !!}
 	</div>
 	@endif
+
+	<div align="center">{{ $title ?? '' }}</div>
+
 	@if(!empty($number))
 		@foreach($posts AS $post)
 			@if(!empty($post->user))
@@ -36,4 +38,5 @@
 <div class="pagntn-link">{{ $posts->links() }}</div>
 @endif
 
-@endsection
+
+@endmaster
