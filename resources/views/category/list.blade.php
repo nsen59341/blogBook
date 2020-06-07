@@ -47,7 +47,7 @@
 			      	
 			      	<button type="submit" name="delete_single" value="{{ $category->id }}" class="btn btn-danger fa fa-trash" title="Delete Category"></button>
 			      	
-			      	<button type="submit" class="btn btn-info fa fa-pencil edit-cat-btn" data-cat_id="{{ $category->id }}" data-cat_name="{{ $category->name }}" title="Edit Category Name" data-toggle="modal" data-target="#editModal"></button>
+			      	<button type="button" class="btn btn-info fa fa-pencil edit-cat-btn" data-cat_id="{{ $category->id }}" data-cat_name="{{ $category->name }}" title="Edit Category Name" data-toggle="modal" data-target="#editModal"></button>
 			      	
 			      </td>
 			      @endif

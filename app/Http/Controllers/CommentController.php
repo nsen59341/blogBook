@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Comment;
+
 class CommentController extends Controller
 {
     /**
@@ -21,9 +23,13 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // return $request->all();
+        $comment = Comment::create($this->commentValidation());
+        $comment->save();
+        return redirect()->back();
+
     }
 
     /**
@@ -80,5 +86,14 @@ class CommentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function commentValidation()
+    {
+        return request()->validate([
+            'user_id' => 'required',
+            'post_id' => 'required',
+            'comment' => 'required'
+        ]);
     }
 }

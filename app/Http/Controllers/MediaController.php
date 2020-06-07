@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\File;
 
 use App\Medias;
 
+use App\User;
+
 class MediaController extends Controller
 {
     /**
@@ -117,18 +119,18 @@ class MediaController extends Controller
             $images = Medias::findOrFail($request->images);
             foreach ($images as $key => $image) {
                 $img_name = $image->name;
+                if( !empty(User::where('profile_pic_id',$image->id)) )
+                {
+                    $user = User::where('profile_pic_id',$image->id)->update(['profile_pic_id' => 1]);
+                }
                 File::delete('media/'.$img_name);
                 $image->delete();
             }
             Session::flash('del_msg','The Selected Images have been succesfully deleted');
             return redirect()->back();
         }
-        else {
-            Session::flash('del_msg','No Image has been selected');
-            return redirect()->back();
-        }
-
-        if( !empty($request->videos) )
+       
+        else if( !empty($request->videos) )
         {
             $videos = Medias::findOrFail($request->videos);
             foreach ($videos as $key => $video) {
@@ -140,7 +142,7 @@ class MediaController extends Controller
             return redirect()->back();
         }
         else {
-            Session::flash('del_msg','No Video has been selected');
+            Session::flash('del_msg','No Image/Video has been selected');
             return redirect()->back();
         }
     }

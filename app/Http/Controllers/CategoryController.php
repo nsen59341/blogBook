@@ -119,7 +119,8 @@ class CategoryController extends Controller
             Session::flash('del_msg','The selected Categories have been succesfully deleted');
             return redirect()->back();
         }
-        else{
+        if( isset($request->delete_multiple) && empty($request->isChecked) )
+        {
             Session::flash('del_msg','No Category has been selected');
             return redirect()->back();
         }

@@ -47,7 +47,11 @@
 		<div class="medias-sec videos-sec" style="display:none">
 			@foreach($videos AS $video)
 			<input type="checkbox" name="videos[]" value="{{ $video['id'] }}">
-			<span><img src="media/{{ $video['name'] }}" height="200px" width="250px"></span>
+			<span>
+				<video height="200px" width="250px" controls>
+					<source src="media/{{ $video['name'] }}">
+				</video>
+			</span>
 			@endforeach
 		</div>
 		@else

@@ -10902,6 +10902,10 @@ a.text-dark:focus {
   margin-bottom: 30px;
 }
 
+.each-post h2 a {
+  color: black;
+}
+
 .pagntn-link {
   margin-top: 70px;
   margin-left: 40%;
@@ -11122,3 +11126,24 @@ cursor: pointer;
 .text-danger{
   color: red;
 } 
+
+.comment-heading{
+  font-family: sans-serif;
+  font-size: large;
+  margin-top: 30px;
+}
+
+.comment-list{
+  margin-top: 40px;
+}
+
+.single-comment{
+  margin-bottom: 20px;
+  border: 1px solid whitesmoke;
+  background: white;
+  padding: 10px;
+}
+
+.not-found-small{
+  color: grey;
+}

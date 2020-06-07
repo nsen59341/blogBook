@@ -22,7 +22,7 @@
 		@foreach($posts AS $post)
 			@if(!empty($post->user))
 				<div class="each-post">
-					<h2>{{ $post->title }}</h2>
+					<h2><a href="{{ route('posts.show',$post->id) }}">{{ $post->title }}</a></h2>
 					<span class="small-txt post-author">posted {{ $post->created_at->diffForHumans() }} by {{ $post->user->name }} </span>
 					<br><br>
 					<p class="post-body">{!! Str::limit($post->blog,200) !!} <a href="{{ route('posts.show',$post->id) }}">read more...</a> </p>

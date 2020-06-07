@@ -76,3 +76,11 @@ Route::get('/medias/create', 'MediaController@create')->name('media.create');
 Route::post('/medias/store', 'MediaController@store')->name('media.store');
 
 Route::delete('/medias/delete', 'MediaController@destroy')->name('media.delete');
+
+
+
+Route::post('/comments/create', 'CommentController@create')->name('comments.create');
+
+Route::get('/comment/edit', 'CommentController@edit')->name('comment.edit');
+
+Route::delete('/comment/delete', 'CommentController@destroy')->name('comment.destroy');

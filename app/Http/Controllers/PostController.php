@@ -10,6 +10,7 @@ use Auth;
 
 use App\Post;
 use App\Category;
+use App\Comment;
 
 class PostController extends Controller
 {
@@ -62,7 +63,10 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return view('post.show', compact('post'));
+        $comments = Comment::where('post_id',$post->id)->get();
+        $comments_count = Comment::where('post_id',$post->id)->count();
+    
+        return view('post.show', compact('post','comments','comments_count'));
     }
 
     /**
