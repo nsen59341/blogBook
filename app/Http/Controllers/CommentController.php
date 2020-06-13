@@ -62,7 +62,10 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        // dd(request()->all());
+        $content = request()->get('comment');
+        Comment::where('id',$id)->update(['comment'=>$content]);
+        return redirect()->back();
     }
 
     /**
@@ -86,6 +89,15 @@ class CommentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete(Request $request)
+    {
+        // dd($request->all());
+        $id = $request->get('comment-id');
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+        return redirect()->back() ;
     }
 
     public function commentValidation()

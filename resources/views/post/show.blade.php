@@ -26,13 +26,16 @@
 				@if(!empty($comment->user))
 				<div class="single-comment col-sm-10">
 					<h5>{{ $comment->user->name }}</h5>
-					{!! Str::limit($comment->comment,120) !!}
+					<span class="content-{{$comment->id}}" contenteditable="false">{!! Str::limit($comment->comment,120) !!}</span>
 					@if( $comment->user_id == Auth::user()->id )
 						<div class="modification-link" align="right">
-							{!! Form::open(['method'=>'get', 'route'=>['comment.edit',$comment->id] , 'class'=>'btn-form']) !!}
-							<button class="btn btn-warning edit-link">edit</button>
+							{!! Form::open(['method'=>'post', 'route'=>['comment.edit',$comment->id], 'class'=>'btn-form form-editable-'.$comment->id]) !!}
+
+							<input type="hidden" name="comment" class="comment-editable-{{$comment->id}}">
+							<button type="button" data-id="{{$comment->id}}" class="btn btn-warning edit-link">edit</button>
 							{!! Form::close() !!}
-							{!! Form::open(['method'=>'delete', 'route'=>['comment.destroy',$comment->id] , 'class'=>'btn-form']) !!}
+							{!! Form::open(['method'=>'delete', 'route'=>'comment.delete' , 'class'=>'btn-form']) !!}
+							<input type="hidden" name="comment-id" value="{{$comment->id}}">
 							<button type="submit" class="btn btn-danger delete-link">delete</button>
 							{!! Form::close() !!}
 						</div>
@@ -70,6 +73,34 @@
 	<!-- end Add comment -->
 
 </div>
+
+@endsection
+
+@section('scripts')
+
+<script type="text/javascript">
+	
+	var id;
+
+	$(".edit-link").on('click', function() {
+		id = $(this).data('id');
+		// console.log(id);
+		$(".content-"+id).attr('contenteditable', true);
+	});
+	
+	$(".comment-list").on('keypress', function(e) {
+		var keyCode = e.keyCode || e.which;
+	    if (keyCode === 13) { 
+	    	var content = $(".content-"+id).text();
+	    	$(".comment-editable-"+id).val(content);
+	    	$(".form-editable-"+id).submit();
+	        // console.log(content);
+	        e.preventDefault();
+            return false;
+	    }
+	});
+
+</script>
 
 @endsection
 

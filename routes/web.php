@@ -81,6 +81,6 @@ Route::delete('/medias/delete', 'MediaController@destroy')->name('media.delete')
 
 Route::post('/comments/create', 'CommentController@create')->name('comments.create');
 
-Route::get('/comment/edit', 'CommentController@edit')->name('comment.edit');
+Route::post('/comment/edit/{id}', 'CommentController@edit')->name('comment.edit');
 
-Route::delete('/comment/delete', 'CommentController@destroy')->name('comment.destroy');
+Route::delete('/comment/delete', 'CommentController@delete')->name('comment.delete');
